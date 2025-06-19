@@ -24,8 +24,9 @@
 
   <body>
     <%= render "layouts/navbar" %>
-    <main class="container mx-auto px-5 my-4 flex flex-col">
+    <main class="container mx-auto px-5 my-3 flex flex-col min-h-[calc(92vh-4rem)]">
       <%= yield %>
     </main>
+    <%= render "layouts/footer" %>
   </body>
 </html>
