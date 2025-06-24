@@ -1,8 +1,7 @@
 @import "tailwindcss";
 
-
 @plugin "./daisyui.js";
-@plugin "./daisyui-theme.js"{
+@plugin "./daisyui-theme.js" {
     name: "hanz";
     default: true;
     prefersdark: true;
@@ -12,13 +11,13 @@
     --color-base-300: hsl(5 100% 33%);
     --color-base-content: #fffafa;
     --color-primary: #e61300;
-    --color-primary-content: #FfFafa;
+    --color-primary-content: #fffafa;
     --color-secondary: #9e4f00;
     --color-secondary-content: #fffafa;
     --color-accent: #cf751b;
     --color-accent-content: #fffafa;
     --color-neutral: #240300;
-    --color-neutral-content: #FFFAFA;
+    --color-neutral-content: #fffafa;
     --color-info: oklch(54% 0.245 262.881);
     --color-info-content: #fffafa;
     --color-success: oklch(87% 0.15 154.449);
