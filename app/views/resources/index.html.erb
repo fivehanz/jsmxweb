@@ -1,29 +1,54 @@
-<% content_for :title, "Resources" %>
+<%# app/views/resources/index.html.erb %>
 
-<div class="w-full">
-  <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
-  <% end %>
-
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Resources</h1>
-    <%= link_to "New resource", new_resource_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
+<div class="container mx-auto px-4 py-12 sm:py-16">
+  <%# Page Header %>
+  <div class="mb-16">
+    <h1 class="text-4xl sm:text-5xl font-bold tracking-tight">resources</h1>
+    <p class="mt-4 text-lg text-base-content/70">curated lists</p>
   </div>
 
-  <div id="resources" class="min-w-full divide-y divide-gray-200 space-y-5">
-    <% if @resources.any? %>
-      <% @resources.each do |resource| %>
-        <div class="flex flex-col sm:flex-row justify-between items-center pb-5 sm:pb-0">
-          <%= render resource %>
-          <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-2">
-            <%= link_to "Show", resource, class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-            <%= link_to "Edit", edit_resource_path(resource), class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-            <%= button_to "Destroy", resource, method: :delete, class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
-          </div>
+  <%# Loop through each resource category %>
+  <% @resources.each_with_index do |category, index| %>
+    <%# Only show the category if it has resources %>
+    <% if category.resources.any? %>
+      <section class="mb-12">
+        <%# Category Header %>
+        <div class="mb-8">
+          <h2 class="text-3xl font-bold"><%= category.name %></h2>
+          <p class="mt-2 text-base-content/80"><%= category.description %></p>
         </div>
+
+        <%# Responsive grid for the resources %>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <% category.resources.each do |resource| %>
+            <div class="card bg-base-200 shadow-md hover:shadow-xl transition-shadow duration-300">
+              <div class="card-body">
+                <h3 class="card-title text-xl"><%= resource.name %></h3>
+
+                <%# Display resource links as buttons if they exist %>
+                <% if resource.links.present? && resource.links.any? %>
+                  <div class="card-actions justify-end mt-4">
+                    <% resource.links.each do |link| %>
+                      <a href="<%= link['href'] %>" class="btn btn-secondary btn-sm" target="_blank" rel="noopener noreferrer">
+                        <%= link['title'] %>
+                        <%# Simple link icon %>
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 ml-1">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-4.5 0V6.75a2.25 2.25 0 012.25-2.25h1.5m-3 0l3 3m-3-3l-3 3" />
+                        </svg>
+                      </a>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </section>
+
+      <%# Add a divider between categories, but not after the last one %>
+      <% unless index == @resource_categories.size - 1 %>
+        <div class="divider my-12"></div>
       <% end %>
-    <% else %>
-      <p class="text-center my-10">No resources found.</p>
     <% end %>
-  </div>
+  <% end %>
 </div>
